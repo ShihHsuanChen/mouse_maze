@@ -1,8 +1,8 @@
 import numpy as np
 
-from game import MouseMazeAgent, State, Action
+from game_gym import MouseMazeAgent, ACTION_SPACE, ActionType
 
 
 class Agent(MouseMazeAgent):
-    def move(self, state: State) -> Action:
-        return np.random.randint(4)
+    def move(self, observation: np.ndarray) -> ActionType:
+        return ACTION_SPACE.sample()

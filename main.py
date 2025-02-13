@@ -1,22 +1,25 @@
 import os
 import time
-from game import MouseMaze
+from game_gym import MouseMazeEnv
 from agent import Agent
 
 gamma = 0.9
 
 def main():
-    game = MouseMaze(random_state=None)
+    game = MouseMazeEnv()
     agent = Agent()
     value = 0
-    game.display()
-    while not game.game_over:
-        action = agent.move(game.state)
-        reward = game.step(action)
+    obs, _ = game.reset()
+    game.render()
+    while True:
+        action = agent.move(obs)
+        obs, reward, terminated, _, _ = game.step(action)
         value = gamma * value + reward
         os.system('clear')
-        game.display()
+        game.render()
         print('Reward', reward, 'Value:', value)
+        if terminated:
+            break
         time.sleep(1)
 
 
